@@ -1,10 +1,10 @@
-import { useAuth } from "@/hooks/useAuth";
+import { useUserAuth } from "@/context/userAuthContext";
 import { Navigate, Outlet } from "react-router";
 
 export const ProtectedRoutes = () => {
-  const { user } = useAuth();
+  const { user } = useUserAuth();
 
   console.log(user);
 
-  return <Outlet />;
+  return user ? <Outlet /> : <Navigate to="/login" replace />;
 };

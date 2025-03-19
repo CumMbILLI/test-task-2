@@ -4,6 +4,8 @@ import { Home } from "@/pages/Home";
 import { Login } from "@/pages/Login";
 import { Register } from "@/pages/Register";
 import { ProtectedRoutes } from "../components/ProtectedRoutes";
+import { NewTodo } from "@/pages/NewTodo";
+import { EditTodo } from "@/pages/EditTodo";
 
 export const router = createBrowserRouter([
   {
@@ -11,8 +13,16 @@ export const router = createBrowserRouter([
     element: <ProtectedRoutes />,
     children: [
       {
-        path: "/",
+        index: true,
         element: <Home />,
+      },
+      {
+        path: "/new-todo",
+        element: <NewTodo />,
+      },
+      {
+        path: "/edit-todo/:id",
+        element: <EditTodo />,
       },
     ],
   },

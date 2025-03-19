@@ -2,17 +2,19 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { auth } from "@/config/firebase.config";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { useUserAuth } from "@/context/userAuthContext";
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 export const Login = () => {
+  const { logIn } = useUserAuth();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -22,11 +24,10 @@ export const Login = () => {
     e.preventDefault();
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate("/", { replace: true });
-      console.log("User logged in successfully");
+      await logIn(email, password);
+      navigate("/");
     } catch (error) {
-      console.error("Error logging in:", error);
+      console.log("Error : ", error);
     }
   };
 
@@ -38,6 +39,15 @@ export const Login = () => {
       <Card className="w-1/2">
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
+          <CardDescription>
+            or{" "}
+            <Link
+              to="/register"
+              className="text-blue-600 underline  decoration-2"
+            >
+              Register
+            </Link>
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <label>Email</label>
